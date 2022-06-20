@@ -1,25 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Worker } from '@react-pdf-viewer/core';
+import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
+import { searchPlugin } from '@react-pdf-viewer/search';
+import PDFViewer from './components/PDFViewer';
+
+// import PDFList from './components/PDFList';
+// import { Data } from './data/PDFListData';
+// import IPDFList from './models/PDFList.model';
+
+
 
 function App() {
+  // const data: IPDFList[] = Data
+  const defaultLayoutPluginInstance = defaultLayoutPlugin();
+  const fileUrl = "/recources/Angular_Router_Crash_Course.pdf";
+  const searchPluginInstance = searchPlugin();
+  const { ShowSearchPopoverButton } = searchPluginInstance;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+    <div className="p-4">
+      <div className='max-w-4xl w-full mx-auto'>
+        <h1 className='text-4xl text-center mt-4 mb-7 font-bold text-purple-600'>PDF Read and Search</h1>
+        {/* <PDFList lists={data} /> */}
+        <Worker workerUrl="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.worker.min.js">
+          <PDFViewer />
+        </Worker>
+
+      </div>
     </div>
+
+
   );
 }
 
