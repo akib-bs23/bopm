@@ -1,4 +1,3 @@
-import { Viewer } from '@react-pdf-viewer/core';
 import { RenderShowSearchPopoverProps, searchPlugin } from '@react-pdf-viewer/search';
 
 const PDFViewer = () => {
@@ -49,7 +48,7 @@ const PDFViewer = () => {
           overflow: 'hidden',
         }}
       >
-        <Viewer fileUrl={fileUrl} plugins={[searchPluginInstance]} />
+        {/* <Viewer fileUrl={fileUrl} plugins={[searchPluginInstance]} /> */}
       </div>
     </div>
   );

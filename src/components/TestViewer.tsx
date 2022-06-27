@@ -5,23 +5,17 @@ import { pageNavigationPlugin } from "@react-pdf-viewer/page-navigation";
 import { searchPlugin } from "@react-pdf-viewer/search";
 
 
-interface IModalProps {
-  onHideModal?: () => void
-  url: string,
-  modalShow: boolean
-  modalClose: any
-}
 
-const Modal = ({ modalShow, url, modalClose }: IModalProps): JSX.Element => {
-  const fileUrl2 = `/recources/${url}`;
+export default function TestViewer() {
+  const fileUrl = "/recources/Angular_Router_Crash_Course.pdf";
 
   const searchPluginInstance = searchPlugin();
   const pageNavigationPluginInstance = pageNavigationPlugin();
   const { ShowSearchPopoverButton } = searchPluginInstance;
+
   const handlePageChange = (e: any) => {
     localStorage.setItem("current-page", `${e.currentPage}`);
   };
-
   const {
     CurrentPageInput,
     GoToFirstPageButton,
@@ -32,41 +26,29 @@ const Modal = ({ modalShow, url, modalClose }: IModalProps): JSX.Element => {
   const currentPage = localStorage.getItem("current-page");
   const initialPage = currentPage ? parseInt(currentPage, 10) : 0;
 
-  return <> {
-
-    <div
-      className="modal">
-      <button
-        onClick={modalClose}
-        className="modal-close"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg>
-      </button>
-      <div className="modal-content">
-
+  return (
+    <>
+      <div>
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
           <div
-            className="rpv-core__viewer viewer-wrapper"
-
+            className="rpv-core__viewer"
+            style={{
+              border: "1px solid rgba(0, 0, 0, 0.3)",
+              display: "flex",
+              flexDirection: "column",
+              height: "100%"
+            }}
           >
-            <div className="top-bar"
+            <div
+              style={{
+                alignItems: "center",
+                backgroundColor: "#eeeeee",
+                borderBottom: "1px solid rgba(0, 0, 0, 0.1)",
+                display: "flex",
+                padding: "4px"
+              }}
             >
-              <div style={{ padding: "0px 2px" }}>
-                <ShowSearchPopoverButton />
-              </div>
+              <ShowSearchPopoverButton />
               <div style={{ padding: "0px 2px" }}>
                 <GoToFirstPageButton />
               </div>
@@ -82,25 +64,40 @@ const Modal = ({ modalShow, url, modalClose }: IModalProps): JSX.Element => {
               <div style={{ padding: "0px 2px" }}>
                 <GoToLastPageButton />
               </div>
-
             </div>
 
+            <div
+              style={{
+                flex: 1,
+                overflow: "hidden"
+              }}
+            ></div>
             <div style={{ height: "720px" }}>
               <Viewer
-                fileUrl={`${fileUrl2}`}
+                fileUrl={fileUrl}
                 initialPage={initialPage}
                 onPageChange={handlePageChange}
                 plugins={[searchPluginInstance, pageNavigationPluginInstance]}
-                defaultScale={1.5}
+                defaultScale={1.2}
               />
             </div>
           </div>
         </Worker>
+        {/* <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
+      <div style={{ height: "720px" }}>
+        <Viewer
+          fileUrl={demoFile}
+          initialPage={initialPage}
+          onPageChange={handlePageChange}
+          plugins={[searchPluginInstance, pageNavigationPluginInstance]}
+          defaultScale={1.2}
+        />
       </div>
-    </div>
-  }
-  </>
-
+    </Worker> */}
+      </div>
+    </>
+  );
 }
 
-export default Modal;
+
+// export default TestViewer
